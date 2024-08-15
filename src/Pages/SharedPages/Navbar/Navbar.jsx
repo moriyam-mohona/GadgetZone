@@ -20,9 +20,7 @@ const Navbar = () => {
 
   const navItems = (
     <>
-      <NavLink to="/">
-        <a>Home</a>
-      </NavLink>
+      <NavLink to="/">Home</NavLink>
     </>
   );
   return (
@@ -70,7 +68,9 @@ const Navbar = () => {
           </button>
         ) : (
           <Link to="/login">
-            <button className="btn glass bg-blue-400 text-white">Login</button>
+            <button className="btn glass bg-blue-400 px-7 text-white">
+              Login
+            </button>
           </Link>
         )}
       </div>
