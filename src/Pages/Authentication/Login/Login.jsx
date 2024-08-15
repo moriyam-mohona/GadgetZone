@@ -48,6 +48,7 @@ const Login = () => {
                 Email<span className="text-red-500">*</span>
               </span>
             </div>
+
             <input
               type="email"
               {...register("email", { required: true })}

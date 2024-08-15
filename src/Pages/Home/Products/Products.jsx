@@ -1,16 +1,13 @@
 import { Rating, ThinRoundedStar } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
-// import { useState } from "react";
 
 const Products = () => {
-  // const [rating, setRating] = useState(0);
   const ratingStyle = {
     itemShapes: ThinRoundedStar,
     activeFillColor: "#60a5fa",
-    inactiveFillColor: "#bfdbfe",
+    inactiveFillColor: "#eff6ff",
   };
 
   const axiosPublic = useAxiosPublic();
@@ -22,45 +19,41 @@ const Products = () => {
     },
   });
 
-  //  const { data: users = [], refetch } = useQuery({
-  //    queryKey: ["users"],
-  //    queryFn: async () => {
-  //      const res = await axiosSecure.get("/users");
-  //      return res.data;
-  //    },
-  //  });
-
   return (
-    <div className="grid grid-cols-3 gap-10">
-      {gadget.map((gadget) => (
-        <div
-          key={gadget._id}
-          className="card image-full w-96 shadow-xl text-white"
-        >
-          <figure>
-            <img src={gadget.image} alt="Shoes" />
-          </figure>
-          <div className="card-body">
-            <div className="flex justify-between">
-              <h2 className="card-title">{gadget.productName}</h2>
-              <h2 className="card-title text-blue-400">$ {gadget.price}</h2>
-            </div>
-            <p>{gadget.description}</p>
-            <Rating
-              style={{ minWidth: 15, maxWidth: 100 }}
-              value={gadget.rating}
-              itemStyles={ratingStyle}
-            />
-            <p>{gadget.ratings}</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary bg-blue-blue-400 ">
-                Buy Now
-              </button>
+    <>
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {gadget.map((gadget) => (
+          <div
+            key={gadget._id}
+            className="card image-full h-60 shadow-xl text-white"
+          >
+            <figure className="bg-blue-300">
+              <img src={gadget.image} alt="gadgetZone" />
+            </figure>
+            <div className="card-body sm:p-2 md:p-4 lg:p-5">
+              <div className="flex justify-between">
+                <h2 className="card-title">{gadget.productName}</h2>
+                <h2 className="card-title text-blue-400">$ {gadget.price}</h2>
+              </div>
+              <p>{gadget.description}</p>
+              <Rating
+                style={{ minWidth: 15, maxWidth: 100 }}
+                value={gadget.rating}
+                itemStyles={ratingStyle}
+              />
+              <p>{gadget.ratings}</p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+      <div className="join my-10 gap-2">
+        <button className="join-item btn bg-blue-100">1</button>
+        <button className="join-item btn btn-active bg-blue-100">2</button>
+        <button className="join-item btn bg-blue-100">3</button>
+        <button className="join-item btn bg-blue-100">4</button>
+      </div>
+    </>
   );
 };
 

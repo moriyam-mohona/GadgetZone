@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/Logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Authentication/Provider/AuthProvider";
@@ -18,11 +18,7 @@ const Navbar = () => {
       });
   };
 
-  const navItems = (
-    <>
-      <NavLink to="/">Home</NavLink>
-    </>
-  );
+  const navItems = <>{/* <NavLink to="/">Home</NavLink> */}</>;
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -57,15 +53,46 @@ const Navbar = () => {
 
       <div className="navbar-end gap-5">
         <div className="hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navItems}</ul>
+          {/* <ul className="menu menu-horizontal px-1">{navItems}</ul> */}
+          <form className="join">
+            <div className="input input-bordered flex items-center gap-2 join-item">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 14 14"
+                fill="currentColor"
+                className="h-4 opacity-70"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <input type="text" className="input " placeholder="Search" />
+            </div>
+            <button className="btn join-item bg-blue-300 text-white">
+              Search
+            </button>
+          </form>
         </div>
         {user ? (
-          <button
-            onClick={handleLogout}
-            className="btn glass bg-blue-400 text-white"
-          >
-            Logout
-          </button>
+          <>
+            <div className="tooltip tooltip-bottom" data-tip={user.displayName}>
+              {/* <button className="btn">Hover me</button> */}
+              <div className="avatar">
+                <div className="mask mask-squircle w-10">
+                  <img src={user.photoURL} />
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={handleLogout}
+              className="btn glass bg-blue-400 text-white"
+            >
+              Logout
+            </button>
+          </>
         ) : (
           <Link to="/login">
             <button className="btn glass bg-blue-400 px-7 text-white">
