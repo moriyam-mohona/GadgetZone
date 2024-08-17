@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../../assets/Logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Authentication/Provider/AuthProvider";
@@ -17,7 +17,16 @@ const Navbar = () => {
       });
   };
 
-  const navItems = <>{/* <NavLink to="/">Home</NavLink> */}</>;
+  const navItems = (
+    <>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/addProduct">Add Product</Link>
+      </li>
+    </>
+  );
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -50,14 +59,13 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div className="navbar-end gap-5">
+      <div className="navbar-end gap-2">
         <div className="hidden lg:flex">
-          {/* <ul className="menu menu-horizontal px-1">{navItems}</ul> */}
+          <ul className="menu menu-horizontal">{navItems}</ul>
         </div>
         {user ? (
           <>
             <div className="tooltip tooltip-bottom" data-tip={user.displayName}>
-              {/* <button className="btn">Hover me</button> */}
               <div className="avatar">
                 <div className="mask mask-squircle w-10">
                   <img src={user.photoURL} />
