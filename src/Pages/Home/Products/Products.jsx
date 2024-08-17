@@ -5,30 +5,60 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 const Products = () => {
+  const [currentPage, setCurrentPage] = useState(0);
   const [searchItem, setSearchItem] = useState("");
+  const itemsPerPage = 12;
+
+  // Load Data From database....
+  const axiosPublic = useAxiosPublic();
+  const { data = { result: [], totalItems: 0 }, refetch } = useQuery({
+    queryKey: ["gadget", currentPage, itemsPerPage],
+    queryFn: async () => {
+      const res = await axiosPublic.get(
+        // `/gadget?page=${currentPage}&size=${itemsPerPage}`
+        `/gadget?page=${searchItem ? 0 : currentPage}&size=${
+          searchItem ? 0 : itemsPerPage
+        }&search=${searchItem}`
+      );
+      return res.data;
+    },
+  });
+
+  const gadget = data.result;
+  const totalItems = data.totalItems;
+
+  // Search functionality....
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchText = e.target.searchItem.value;
+    setSearchItem(searchText);
+    refetch();
+  };
+
+  const filteredGadgets = gadget.filter((g) =>
+    g.productName.toLowerCase().includes(searchItem.toLowerCase())
+  );
+
+  // Pagination
+  const numberOfPages = Math.ceil(totalItems / itemsPerPage);
+  const pages = [...Array(numberOfPages).keys()];
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   const ratingStyle = {
     itemShapes: ThinRoundedStar,
     activeFillColor: "#60a5fa",
     inactiveFillColor: "#eff6ff",
-  };
-
-  const axiosPublic = useAxiosPublic();
-  const { data: gadget = [], refetch } = useQuery({
-    queryKey: ["gadget"],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/gadget`);
-      return res.data;
-    },
-  });
-  const filteredGadgets = gadget.filter((g) =>
-    g.productName.toLowerCase().includes(searchItem.toLowerCase())
-  );
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const searchText = e.target.searchItem.value;
-    console.log(searchText);
-    setSearchItem(searchText);
-    refetch();
   };
 
   return (
@@ -80,6 +110,7 @@ const Products = () => {
                 <h2 className="card-title">{gadget.productName}</h2>
                 <h2 className="card-title text-blue-400">$ {gadget.price}</h2>
               </div>
+              <p className="font-bold">{gadget.category}</p>
               <p>{gadget.description}</p>
               <Rating
                 style={{ minWidth: 15, maxWidth: 100 }}
@@ -92,12 +123,52 @@ const Products = () => {
           </div>
         ))}
       </div>
-      <div className="join my-10 gap-2">
-        <button className="join-item btn bg-blue-100">1</button>
-        <button className="join-item btn btn-active bg-blue-100">2</button>
-        <button className="join-item btn bg-blue-100">3</button>
-        <button className="join-item btn bg-blue-100">4</button>
-      </div>
+      {/* <div className="join my-10 gap-2">
+        <button onClick={handlePrevPage} className="join-item btn btn-outline">
+          Previous page
+        </button>
+        {pages.map((page) => (
+          <button
+            onClick={() => setCurrentPage(page)}
+            key={page}
+            className={`join-item btn ${
+              currentPage === page ? "btn-active" : "bg-blue-100"
+            }`}
+          >
+            {page + 1}
+          </button>
+        ))}
+        <button onClick={handleNextPage} className="join-item btn btn-outline">
+          Next
+        </button>
+      </div> */}
+      {!searchItem && (
+        <div className="join my-10 gap-2">
+          <button
+            onClick={handlePrevPage}
+            className="join-item btn btn-outline"
+          >
+            Previous page
+          </button>
+          {pages.map((page) => (
+            <button
+              onClick={() => setCurrentPage(page)}
+              key={page}
+              className={`join-item btn ${
+                currentPage === page ? "btn-active" : "bg-blue-100"
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+          <button
+            onClick={handleNextPage}
+            className="join-item btn btn-outline"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </>
   );
 };
