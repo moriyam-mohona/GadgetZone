@@ -23,7 +23,7 @@ const SignUp = () => {
       .then((result) => {
         Swal.fire("Successfully Signed Up");
         const signedUser = result.user;
-        console.log(signedUser);
+        console.log(signedUser.displayName);
         navigate("/");
       })
       .catch((error) => {
