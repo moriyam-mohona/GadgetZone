@@ -37,7 +37,6 @@ const Filter = ({ setBrand, setCategory, setPriceRange, refetch }) => {
           <option value="Dell">Dell</option>
           <option value="Samsung">Microsoft</option>
           <option value="Xiaomi">Xiaomi</option>
-          {/* Add more brands as needed */}
         </select>
       </div>
       <div className="form-control">
@@ -52,7 +51,6 @@ const Filter = ({ setBrand, setCategory, setPriceRange, refetch }) => {
           <option value="Tablets">Tablets</option>
           <option value="Smartwatches">Smartwatches</option>
           <option value="Monitors">Monitors</option>
-          {/* Add more brands as needed */}
         </select>
       </div>
       <div className="form-control">
@@ -66,7 +64,6 @@ const Filter = ({ setBrand, setCategory, setPriceRange, refetch }) => {
           <option value="101-500">$101 - $500</option>
           <option value="501-1000">$501 - $1000</option>
           <option value="1001-5000">$1001 - $5000</option>
-          {/* Add more ranges as needed */}
         </select>
       </div>
     </div>

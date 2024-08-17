@@ -11,6 +11,7 @@ const Products = () => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
 
   const itemsPerPage = 12;
 
@@ -25,6 +26,7 @@ const Products = () => {
       brand,
       category,
       priceRange,
+      sortOrder,
     ],
     queryFn: async () => {
       let priceQuery = "";
@@ -33,7 +35,7 @@ const Products = () => {
         priceQuery = `&minPrice=${minPrice}&maxPrice=${maxPrice}`;
       }
       const res = await axiosPublic.get(
-        `/gadget?page=${currentPage}&size=${itemsPerPage}&search=${searchItem}&brand=${brand}&category=${category}${priceQuery}`
+        `/gadget?page=${currentPage}&size=${itemsPerPage}&search=${searchItem}&brand=${brand}&category=${category}${priceQuery}&sortOrder=${sortOrder}`
       );
       return res.data;
     },
@@ -63,16 +65,20 @@ const Products = () => {
       setCurrentPage(currentPage + 1);
     }
   };
-
+  //Rating....
   const ratingStyle = {
     itemShapes: ThinRoundedStar,
     activeFillColor: "#60a5fa",
     inactiveFillColor: "#eff6ff",
   };
-
+  // Sorting
+  const handleSortChange = (e) => {
+    setSortOrder(e.target.value);
+    refetch(); // Refetch data to apply the new sorting order
+  };
   return (
     <>
-      <div className="flex my-10 w-full justify-center gap-5">
+      <div className="flex mb-10 w-full justify-center gap-5">
         <form className="join" onSubmit={handleSearch}>
           <div className="input input-bordered flex items-center gap-2 join-item">
             <svg
@@ -110,6 +116,15 @@ const Products = () => {
           setCategory={setCategory}
           setPriceRange={setPriceRange}
         />
+        <select
+          className="select select-info w-full max-w-xs"
+          onChange={handleSortChange}
+        >
+          <option value="">Sort by</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+          <option value="date_desc">Date Added: Newest first</option>
+        </select>
       </div>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {gadget.map((gadget) => (
