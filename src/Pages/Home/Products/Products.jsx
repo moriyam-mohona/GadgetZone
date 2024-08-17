@@ -4,6 +4,10 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Filter from "../../../Components/Filter/Filter";
+import {
+  MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+} from "react-icons/md";
 
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -13,7 +17,7 @@ const Products = () => {
   const [priceRange, setPriceRange] = useState("");
   const [sortOrder, setSortOrder] = useState("");
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 9;
 
   // Load Data From database....
   const axiosPublic = useAxiosPublic();
@@ -78,9 +82,9 @@ const Products = () => {
   };
   return (
     <>
-      <div className="flex mb-10 w-full justify-center gap-5">
-        <form className="join" onSubmit={handleSearch}>
-          <div className="input input-bordered flex items-center gap-2 join-item">
+      <div className="flex flex-col lg:flex-row mb-10 w-full justify-center gap-5 mx-auto">
+        <form className="join w-full mx-auto" onSubmit={handleSearch}>
+          <div className="input input-info flex items-center gap-2 join-item max-w-sm  w-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 14 14"
@@ -96,8 +100,8 @@ const Products = () => {
             <input
               name="searchItem"
               type="text"
-              className="input"
-              placeholder="Search"
+              className="input-info"
+              placeholder="Search product"
               value={searchItem}
               onChange={(e) => setSearchItem(e.target.value)}
               // value={searchItem}
@@ -116,10 +120,7 @@ const Products = () => {
           setCategory={setCategory}
           setPriceRange={setPriceRange}
         />
-        <select
-          className="select select-info w-full max-w-xs"
-          onChange={handleSortChange}
-        >
+        <select className="select select-info" onChange={handleSortChange}>
           <option value="">Sort by</option>
           <option value="price_asc">Price: Low to High</option>
           <option value="price_desc">Price: High to Low</option>
@@ -133,19 +134,21 @@ const Products = () => {
             className="card image-full h-60 shadow-xl text-white"
           >
             <figure className="bg-blue-300">
-              <img src={gadget.image} alt="gadgetZone" />
+              <img src={gadget.image} alt="gadgetZone" className="w-full" />
             </figure>
             <div className="card-body sm:p-2 md:p-4 lg:p-5">
               <div className="flex justify-between items-start">
                 <h2 className="card-title">
                   {gadget.productName} ({gadget.brand})
                 </h2>
-                <h2 className="card-title text-blue-400">${gadget.price}</h2>
+                <h2 className=" text-blue-400 bg-white px-2 py-1 rounded text-lg font-bold">
+                  ${gadget.price}
+                </h2>
               </div>
               <p className="font-bold">{gadget.category}</p>
               <p>{gadget.description}</p>
               <Rating
-                style={{ minWidth: 15, maxWidth: 100 }}
+                style={{ minWidth: 15, maxWidth: 120 }}
                 value={gadget.rating}
                 itemStyles={ratingStyle}
               />
@@ -159,9 +162,9 @@ const Products = () => {
         <div className="join my-10 gap-2">
           <button
             onClick={handlePrevPage}
-            className="join-item btn btn-outline"
+            className="join-item btn btn-outline text-xl bg-blue-100 text-blue-500"
           >
-            Previous page
+            <MdKeyboardDoubleArrowLeft />
           </button>
           {pages.map((page) => (
             <button
@@ -176,9 +179,9 @@ const Products = () => {
           ))}
           <button
             onClick={handleNextPage}
-            className="join-item btn btn-outline"
+            className="join-item btn btn-outline text-xl bg-blue-100 text-blue-500"
           >
-            Next
+            <MdKeyboardDoubleArrowRight />
           </button>
         </div>
       )}

@@ -24,7 +24,7 @@ const Filter = ({ setBrand, setCategory, setPriceRange, refetch }) => {
     refetch();
   };
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-col md:flex-row gap-3 w-full">
       <div className="form-control ">
         <select
           className="select select-info w-full"
@@ -37,6 +37,11 @@ const Filter = ({ setBrand, setCategory, setPriceRange, refetch }) => {
           <option value="Dell">Dell</option>
           <option value="Samsung">Microsoft</option>
           <option value="Xiaomi">Xiaomi</option>
+          <option value="Bose">Bose</option>
+          <option value="Sony">Sony</option>
+          <option value="Asus">Asus</option>
+          <option value="HP">HP</option>
+          <option value="Acer">Acer</option>
         </select>
       </div>
       <div className="form-control">
