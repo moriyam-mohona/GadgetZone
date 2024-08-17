@@ -25,9 +25,9 @@ const Filter = ({ setBrand, setCategory, setPriceRange, refetch }) => {
   };
   return (
     <div className="flex flex-col md:flex-row gap-3 w-full">
-      <div className="form-control ">
+      <div className="form-control floating-label">
         <select
-          className="select select-info w-full"
+          className="select select-info w-full floating-label"
           value={selectedBrand}
           onChange={handleBrandChange}
         >

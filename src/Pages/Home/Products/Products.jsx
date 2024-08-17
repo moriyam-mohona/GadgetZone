@@ -82,7 +82,7 @@ const Products = () => {
   };
   return (
     <>
-      <div className="flex flex-col lg:flex-row mb-10 w-full justify-center gap-5 mx-auto">
+      <div className="flex flex-col lg:flex-row mb-10 w-full justify-center gap-3 mx-auto">
         <form className="join w-full mx-auto" onSubmit={handleSearch}>
           <div className="input input-info flex items-center gap-2 join-item max-w-sm  w-full">
             <svg
