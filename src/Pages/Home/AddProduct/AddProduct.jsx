@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -23,7 +24,13 @@ const AddProduct = () => {
     e.preventDefault();
     try {
       await axiosPublic.post("/gadget", product);
-      alert("Product added successfully!");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "New Product added Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       // Redirect or reset form if needed
     } catch (error) {
       console.error(error);
