@@ -214,7 +214,7 @@ const Products = () => {
             <button
               onClick={() => setCurrentPage(page)}
               key={page}
-              className={`join-item btn text-xs sm:text-sm md:text-base px-2 py-1 ${
+              className={`join-item btn text-xs sm:text-sm md:text-base sm:px-2 md:p-3 lg:p-3 text-blue-400 ${
                 currentPage === page ? "btn-active" : "bg-blue-100"
               }`}
             >
@@ -229,7 +229,6 @@ const Products = () => {
           </button>
         </div>
       )}
-      {/* <ToastContainer /> */}
       <Toaster />
     </>
   );
