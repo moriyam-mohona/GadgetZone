@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import SocialLogin from "../../../Components/SocialLogin/SocialLogin";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
@@ -21,7 +22,7 @@ const Login = () => {
     console.log(data);
     signIn(data.email, data.password)
       .then((result) => {
-        Swal.fire("Login Successful");
+        toast.success("Login Successful");
         const loggedUser = result.user;
         console.log(loggedUser);
         navigate("/");

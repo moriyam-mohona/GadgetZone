@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Pages/Authentication/Provider/AuthProvider";
 import { FcGoogle } from "react-icons/fc";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SocialLogin = () => {
   const { googleSignUp } = useContext(AuthContext);
@@ -11,7 +11,7 @@ const SocialLogin = () => {
   const handleGoogleLogin = () => {
     googleSignUp()
       .then((result) => {
-        Swal.fire("Successfully Signed Up");
+        toast.success("Successfully Signed Up");
         const googleLoggedUser = result.user;
         console.log(googleLoggedUser);
         navigate("/");

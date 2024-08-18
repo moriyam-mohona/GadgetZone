@@ -1,22 +1,25 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/Logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Authentication/Provider/AuthProvider";
+import { LiaCartPlusSolid } from "react-icons/lia";
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [cart, refetchCart] = useCart();
   const handleLogout = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
+        refetchCart();
         navigate("/login");
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
-
   const navItems = (
     <>
       <li>
@@ -24,6 +27,18 @@ const Navbar = () => {
       </li>
       <li>
         <Link to="/addProduct">Add Product</Link>
+      </li>
+      <li>
+        <Link to="/addProduct">
+          <div tabIndex={0}>
+            <div className="indicator">
+              <LiaCartPlusSolid className="text-2xl" />
+              <span className="badge badge-sm indicator-item">
+                {cart.length}
+              </span>
+            </div>
+          </div>
+        </Link>
       </li>
     </>
   );
@@ -63,6 +78,7 @@ const Navbar = () => {
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal">{navItems}</ul>
         </div>
+
         {user ? (
           <>
             <div className="tooltip tooltip-bottom" data-tip={user.displayName}>
