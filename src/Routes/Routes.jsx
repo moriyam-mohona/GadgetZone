@@ -6,6 +6,7 @@ import Login from "../Pages/Authentication/Login/Login";
 import SignUp from "../Pages/Authentication/SignUp/SignUp";
 import AddProduct from "../Pages/Home/AddProduct/AddProduct";
 import PrivateRouter from "./PrivateRoute";
+import CartItem from "../Pages/CartItem/CartItem";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +21,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRouter>
             <AddProduct></AddProduct>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/cartItem",
+        element: (
+          <PrivateRouter>
+            <CartItem></CartItem>
           </PrivateRouter>
         ),
       },

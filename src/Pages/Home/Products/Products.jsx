@@ -105,7 +105,6 @@ const Products = () => {
       axiosPublic.post("/cart", cartItem).then((res) => {
         if (res.data.insertedId) {
           toast.success(`${gadget.productName} added to the cart`);
-          refetch();
           refetchCart();
         }
       });
@@ -162,7 +161,6 @@ const Products = () => {
           <option value="date_desc">Date Added: Newest first</option>
         </select>
       </div>
-
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {gadget.map((gadget) => (
           <div

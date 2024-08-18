@@ -7,7 +7,7 @@ const PrivateRouter = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    <span className="loading loading-spinner text-secondary"></span>;
+    return <span className="loading loading-spinner text-secondary"></span>;
   }
   if (user) {
     return children;

@@ -9,17 +9,18 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const [cart, refetchCart] = useCart();
+
   const handleLogout = () => {
     logOut()
       .then(() => {
-        // Sign-out successful.
-        refetchCart();
+        refetchCart(); // Ensure the cart updates after logout
         navigate("/login");
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
+
   const navItems = (
     <>
       <li>
@@ -29,7 +30,7 @@ const Navbar = () => {
         <Link to="/addProduct">Add Product</Link>
       </li>
       <li>
-        <Link to="/addProduct">
+        <Link to="/cartItem">
           <div tabIndex={0}>
             <div className="indicator">
               <LiaCartPlusSolid className="text-2xl" />
@@ -42,6 +43,7 @@ const Navbar = () => {
       </li>
     </>
   );
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
