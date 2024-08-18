@@ -10,10 +10,29 @@ import {
 } from "react-icons/md";
 import { LiaCartPlusSolid } from "react-icons/lia";
 import { AuthContext } from "../../Authentication/Provider/AuthProvider";
-import Swal from "sweetalert2";
 import useCart from "../../../Hooks/useCart";
 import toast, { Toaster } from "react-hot-toast";
+import { motion } from "framer-motion";
 
+const container = {
+  hidden: { opacity: 1, scale: 0 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
 const Products = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchItem, setSearchItem] = useState("");
@@ -133,7 +152,7 @@ const Products = () => {
             <input
               name="searchItem"
               type="text"
-              className="input-info"
+              className="w-full"
               placeholder="Search product"
               value={searchItem}
               onChange={(e) => setSearchItem(e.target.value)}
@@ -161,11 +180,17 @@ const Products = () => {
           <option value="date_desc">Date Added: Newest first</option>
         </select>
       </div>
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <motion.div
+        className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+        variants={container}
+        initial="hidden"
+        animate="visible"
+      >
         {gadget.map((gadget) => (
-          <div
+          <motion.li
             key={gadget._id}
-            className="card image-full h-72 shadow-xl text-white"
+            className="card image-full h-72 shadow-xl text-white item"
+            variants={item}
           >
             <figure className="bg-blue-300">
               <img src={gadget.image} alt="gadgetZone" className="w-full" />
@@ -195,13 +220,11 @@ const Products = () => {
                   <LiaCartPlusSolid className="text-2xl" />
                 </button>
               </div>
-
-              <p>{gadget.ratings}</p>
               <div className="card-actions justify-end"></div>
             </div>
-          </div>
+          </motion.li>
         ))}
-      </div>
+      </motion.div>
       {!searchItem && (
         <div className="join my-10 gap-2 flex flex-wrap justify-center">
           <button
@@ -229,6 +252,7 @@ const Products = () => {
           </button>
         </div>
       )}
+
       <Toaster />
     </>
   );
